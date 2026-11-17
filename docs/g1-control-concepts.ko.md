@@ -115,6 +115,9 @@ int32_t ret = client.GetFsmId(fsm_id);
 이 앱은 HTTP 입력 → 앱 Mimic 상태 → 명시적인 UserCtrl 진입 → 외부 정책 실행 경로를 사용한다.
 두 경로의 상태 전이도, 정확한 필드 구분과 미확정 항목은
 [Mimic 모션 API 검증 문서](g1-mimic-motion-api.ko.md)에 정리했다.
+동일 sport 서비스에서 **모션 선택과 제어권 인계의 의미가 다른 이유**, 실제 RPC parameter,
+앱·공식 상태의 결합 전이 및 복원 SDK의 구현 범위는
+[FSM 연결 심화 분석](g1-fsm-dispatch-and-handoff.ko.md)을 참고한다.
 
 근거: [공식 운동 서비스의 Dance Mode 절][ref-sport], [공식 G1 Loco 클라이언트][ref-loco-current].
 

@@ -25,6 +25,12 @@
    - `550501`의 조건부 의미와 앱 ID·공식 모드 ID `501`의 구분
    - 공식 모션 호출과 UserCtrl 기반 외부 정책 실행의 별도 상태 전이도
    - 자동 `550xxx → 1000 → 550xxx` 전환 주장에 대한 확인 범위
+5. [모션 선택·제어권 인계·앱 FSM의 연결과 리버싱 검토](g1-fsm-dispatch-and-handoff.ko.md)
+   - 같은 sport 서비스에서 서로 다른 요청인 7100·7101·7110·7111의 비교
+   - 앱 상태와 공식 FsmId를 조합한 상태 전이도
+   - `unitree_sdk2_reversed`의 범용 RPC 서버와 G1 운동 제어기 구현의 구분
+   - 개발자 포럼, 실제 모션 클라이언트와 실기체 연구의 교차 검토
+   - 원본 SDK 헤더를 컴파일한 [격리 RPC 확인 자료](evidence/README.md)
 
 ## 분석 기준
 
@@ -32,12 +38,15 @@
 |---|---|
 | 최초 확인일 | 2026-11-17, Asia/Seoul |
 | Mimic 모션 API 추가 검토일 | 2026-11-18, Asia/Seoul |
+| 리버싱 및 제어권 인계 심화 검토일 | 2026-11-18, Asia/Seoul |
 | 앱 저장소 기준 커밋 | `1a16513b8a57d76708ffd2854fe2a73c090cced1` |
 | 로컬 공식 C++ SDK 기준 커밋 | `63096d0ac0c5d2dec9d6e0c22cd5233410ca2f36` |
 | 추가 검토 시 공식 C++ SDK 원격 main | `aaf69cb56c9d5ed63d8b284008ec3a8ab999bec1` |
+| 로컬 unitree_sdk2_reversed / lgrobot_sdk | `392e753457adb24d08c2c1efd09cc2112d29a953` |
 | 로컬 공식 Python SDK 기준 커밋 | `814556d15970dd2ecf1c9984e845ca02ab07e206` |
 | 앱 분석 대상 | `g1_mimic_demo/deploy_template/` 및 `g1_mimic_demo/app/g1/` |
 | 실행 확인 범위 | 소스·설정·ELF 검사와 격리된 Python 함수 확인. 로봇 제어 및 ARM64 전체 빌드는 수행하지 않음 |
+| 추가 실행 확인 | 실제 G1 inline 메서드·원본 JSON 구현 + 전송 테스트 대역으로 6개 RPC 기록. 로봇 연결 없음 |
 
 커밋은 이 문서 작성 전 소스의 기준이다. Dockerfile은 별도로 SDK의 `main`을 다운로드하므로,
 새로 생성한 빌더 이미지가 위의 로컬 SDK 커밋을 사용한다고 가정하면 안 된다.
