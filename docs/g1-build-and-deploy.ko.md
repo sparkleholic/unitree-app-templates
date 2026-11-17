@@ -2,6 +2,10 @@
 
 [문서 색인](README.md) · [공식 제어 개념](g1-control-concepts.ko.md) · [실행 구조와 상태 전이](g1-mimic-runtime.ko.md)
 
+패키지 설치를 새 공식 FsmId 등록으로 해석하지 않는다.
+설치·활성화·로컬 REGISTER_FSM·공식 UserCtrl 전환의 관계는
+[FsmId 통합 참조본](fsm-id-reference.ko.md)을 참고한다.
+
 ## 1. 소스와 배포 디렉터리의 관계
 
 `deploy_template/`은 C++ 제어기의 빌드 입력이고, `app/`은 UniStore에 전달할 실행 패키지이다.

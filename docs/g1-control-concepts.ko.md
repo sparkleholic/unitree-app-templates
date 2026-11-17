@@ -2,6 +2,9 @@
 
 [문서 색인](README.md) · [앱의 실제 상태 전이](g1-mimic-runtime.ko.md) · [빌드 및 배포](g1-build-and-deploy.ko.md)
 
+모델별 최종 ID와 설치 앱의 등록 범위는 [FsmId 통합 참조본](fsm-id-reference.ko.md)을 기준으로 읽는다.
+이 문서의 G1 번호·서비스 설명을 H1·H2에 그대로 적용하지 않는다.
+
 ## 1. 서로 다른 숫자 체계를 먼저 구분한다
 
 FSM은 Finite State Machine, 즉 유한 상태 머신이라는 설계 방식이다.

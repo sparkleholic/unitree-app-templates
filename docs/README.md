@@ -1,7 +1,11 @@
-# G1 제어 및 UniStore 앱 분석 문서
+# Unitree FsmId 및 UniStore 앱 분석 문서
 
 이 문서는 Unitree G1의 제어 경로와 `g1_mimic_demo`의 실제 구현을 함께 설명한다.
 공식 운용 제어기의 상태와 앱 내부 상태를 구분하고, 각 전환이 어떤 API와 DDS 토픽에 연결되는지 추적한다.
+
+**먼저 [FsmId 통합 참조본](fsm-id-reference.ko.md)을 읽는다.**
+G1·H1·H2의 모델별 ID, 전환 함수·조건, UniStore 앱 설치와 로컬 FSM 등록을 통합했다.
+아래 상세 문서는 개별 근거와 구현 분석을 제공한다.
 
 ## 문서 구성
 
@@ -31,6 +35,12 @@
    - `unitree_sdk2_reversed`의 범용 RPC 서버와 G1 운동 제어기 구현의 구분
    - 개발자 포럼, 실제 모션 클라이언트와 실기체 연구의 교차 검토
    - 원본 SDK 헤더를 컴파일한 [격리 RPC 확인 자료](evidence/README.md)
+6. [FsmId 통합 참조본](fsm-id-reference.ko.md)
+   - 모델별 공식 ID 표 및 C++·Python 함수의 실제 요청값
+   - 전이 요청과 허용 조건, 공식 상태 보고 및 실제 적용의 구분
+   - H2의 701/703 버전 차이와 GetAvailableFsmIds
+   - UniStore Action ID, 앱 로컬 상태 등록, 기존 UserCtrl 1000의 구분
+   - 설치·활성화·실행·복귀·삭제 수명주기와 정확성 검토
 
 ## 분석 기준
 
@@ -39,6 +49,7 @@
 | 최초 확인일 | 2026-11-17, Asia/Seoul |
 | Mimic 모션 API 추가 검토일 | 2026-11-18, Asia/Seoul |
 | 리버싱 및 제어권 인계 심화 검토일 | 2026-11-18, Asia/Seoul |
+| G1·H1·H2 및 앱 등록 통합 검토일 | 2026-11-18, Asia/Seoul |
 | 앱 저장소 기준 커밋 | `1a16513b8a57d76708ffd2854fe2a73c090cced1` |
 | 로컬 공식 C++ SDK 기준 커밋 | `63096d0ac0c5d2dec9d6e0c22cd5233410ca2f36` |
 | 추가 검토 시 공식 C++ SDK 원격 main | `aaf69cb56c9d5ed63d8b284008ec3a8ab999bec1` |
@@ -47,6 +58,7 @@
 | 앱 분석 대상 | `g1_mimic_demo/deploy_template/` 및 `g1_mimic_demo/app/g1/` |
 | 실행 확인 범위 | 소스·설정·ELF 검사와 격리된 Python 함수 확인. 로봇 제어 및 ARM64 전체 빌드는 수행하지 않음 |
 | 추가 실행 확인 | 실제 G1 inline 메서드·원본 JSON 구현 + 전송 테스트 대역으로 6개 RPC 기록. 로봇 연결 없음 |
+| 모델별 추가 확인 | G1·H1·H2 원본 헤더로 19개 요청 기록. 실제 전이·목록 응답을 측정한 검사는 아님 |
 
 커밋은 이 문서 작성 전 소스의 기준이다. Dockerfile은 별도로 SDK의 `main`을 다운로드하므로,
 새로 생성한 빌더 이미지가 위의 로컬 SDK 커밋을 사용한다고 가정하면 안 된다.
@@ -91,6 +103,11 @@ API 호출이 성공했다고 최종 상태 전환까지 성공했다고 간주�
 - [G1 Motion Switcher Service Interface](https://support.unitree.com/home/en/G1_developer/motion_witcher_service_interface)
 - [G1 Remote Control](https://support.unitree.com/home/en/G1_developer/remote_control)
 - [G1 Arm Action Service Interface](https://support.unitree.com/home/en/G1_developer/arm_action_interface)
+- [H1 운동 서비스 공식 영문 문서](https://support.unitree.com/home/en/H1_developer/Sports_Services_Interface)
+- [H1 운동 서비스 중문 원문](https://support.unitree.com/home/zh/H1_developer/Sports_Services_Interface)
+- [H2 운동 서비스](https://support.unitree.com/home/en/H2_developer/sport_services_interface)
+- [UniStore 앱 생성·식별자](https://unistore.unitree.com/manuals?slug=create-application)
+- [UniStore 앱 설치·활성화·실행](https://unistore.unitree.com/manuals?slug=action-user-guide)
 - [UniStore 사용자 프로그램 전환 설명](https://unistore.unitree.com/manuals?slug=switch-sdk2)
 - [공식 G1 모델 및 mode_machine 대응표](https://github.com/unitreerobotics/unitree_ros/blob/master/robots/g1_description/README.md)
 - [공식 C++ SDK](https://github.com/unitreerobotics/unitree_sdk2)

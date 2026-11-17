@@ -1,0 +1,185 @@
+{
+  "review_date": "2026-11-18",
+  "timezone": "Asia/Seoul",
+  "purpose": "Source provenance for fsm-id-reference.ko.md; no robot execution",
+  "web_hash_note": "Hashes identify collected temporary text or images. Full external documents are not redistributed in this repository. Renderer headers and formatting may change the text hash on recollection.",
+  "official_web_sources": [
+    {
+      "title": "G1 motion services",
+      "url": "https://support.unitree.com/home/en/G1_developer/sport_services_interface",
+      "collection": "Read-only rendered text through r.jina.ai; not an official mirror",
+      "collected_bytes": 15919,
+      "collected_text_sha256": "b6f2359b831723a0ac073ed38dc00303317ca98f716bf0c0f625d737a08b7852"
+    },
+    {
+      "title": "G1 mode switching and remote control",
+      "url": "https://support.unitree.com/home/en/G1_developer/remote_control",
+      "collection": "Read-only rendered text through r.jina.ai; not an official mirror",
+      "collected_bytes": 10751,
+      "collected_text_sha256": "b52ce5c0fe6496bef0fe75790855d08367b3cb56d889b544341d2db89733f513"
+    },
+    {
+      "title": "H1 motion services, English",
+      "url": "https://support.unitree.com/home/en/H1_developer/Sports_Services_Interface",
+      "collection": "Read-only rendered text through r.jina.ai; not an official mirror",
+      "collected_bytes": 11697,
+      "collected_text_sha256": "0d11626f6490b19fb2a766e1b54c405e67300c7b812409f961fce0cb8af3ba60"
+    },
+    {
+      "title": "H1 motion services, Chinese",
+      "url": "https://support.unitree.com/home/zh/H1_developer/Sports_Services_Interface",
+      "collection": "Read-only rendered text through r.jina.ai; not an official mirror",
+      "collected_bytes": 10076,
+      "collected_text_sha256": "6c28410e775cc5ef7097dc5eac47d087c65f931eba2860128f5561bef8512ffd"
+    },
+    {
+      "title": "H2 motion services, English",
+      "url": "https://support.unitree.com/home/en/H2_developer/sport_services_interface",
+      "collection": "Read-only rendered text through r.jina.ai; not an official mirror",
+      "collected_bytes": 8440,
+      "collected_text_sha256": "dbf8a460bc067707b3188702f18372148fb77e9bad8f516c7c3e0f40e7f1c6ea"
+    },
+    {
+      "title": "H2 motion services, Chinese",
+      "url": "https://support.unitree.com/home/zh/H2_developer/sport_services_interface",
+      "collection": "Read-only rendered text through r.jina.ai; not an official mirror",
+      "collected_bytes": 7173,
+      "collected_text_sha256": "ba16ca1a4decf2c877c2527c67643c575ebf1571a164573d1c7314c96a606200"
+    },
+    {
+      "title": "H2 remote control",
+      "url": "https://support.unitree.com/home/en/H2_developer/remote_control",
+      "collection": "Read-only rendered text through r.jina.ai; not an official mirror",
+      "collected_bytes": 5345,
+      "collected_text_sha256": "9b17fbacc5bb5bdb7eda39a16461f74e8c9fdd5389f73f3c8a0b76b4b86f3fe9"
+    },
+    {
+      "title": "UniStore action creation",
+      "url": "https://unistore.unitree.com/manuals?slug=create-application",
+      "collection": "Read-only rendered text through r.jina.ai; not an official mirror",
+      "collected_bytes": 11622,
+      "collected_text_sha256": "31ab37b19ffebc661f66b890dead4ad1461e0d2ff449d512f17324daf25fdf2a"
+    },
+    {
+      "title": "UniStore action version upload",
+      "url": "https://unistore.unitree.com/manuals?slug=upload-action-version",
+      "collection": "Read-only rendered text through r.jina.ai; not an official mirror",
+      "collected_bytes": 14685,
+      "collected_text_sha256": "a34729bd52aca9cf312f82b1a93103ca70f69501164e8ff79615c7cc74f351a3"
+    },
+    {
+      "title": "UniStore action user guide",
+      "url": "https://unistore.unitree.com/manuals?slug=action-user-guide",
+      "collection": "Read-only rendered text through r.jina.ai; not an official mirror",
+      "collected_bytes": 12634,
+      "collected_text_sha256": "4c3f478c28d87767f175143bba25758c923eef7113b746cecf6ad7d0d11d9de7"
+    },
+    {
+      "title": "H2 official remote diagram, package 1.0.3.1",
+      "url": "https://doc-cdn.unitree.com/static/2026/11/3/22b8a467f2ee4204844510f1c7ba7a4f_1515x819.jpg",
+      "collection": "Downloaded image inspected visually",
+      "collected_bytes": 639759,
+      "sha256": "c0e00afc5812cee61f76812083e30fb461d3e8ff3a03ce7ba4eb0b2f40f62f11"
+    }
+  ],
+  "sdk": {
+    "repository": "https://github.com/unitreerobotics/unitree_sdk2",
+    "local_commit": "63096d0ac0c5d2dec9d6e0c22cd5233410ca2f36",
+    "verified_remote_main": "aaf69cb56c9d5ed63d8b284008ec3a8ab999bec1",
+    "archive_sha256": "08402aea74150dfbfc3fbfded4ca746916a8d892b54d2bade0cbf392a3be4029",
+    "compared_files": [
+      {
+        "path": "include/unitree/robot/g1/loco/g1_loco_client.hpp",
+        "local_sha256": "d9aabe78918312c2ec60c5df94653e81319eb6730cc1479372a09849d99cd361",
+        "pinned_remote_url": "https://github.com/unitreerobotics/unitree_sdk2/blob/aaf69cb56c9d5ed63d8b284008ec3a8ab999bec1/include/unitree/robot/g1/loco/g1_loco_client.hpp",
+        "comparison": "Remote and local text identical after trimming trailing whitespace"
+      },
+      {
+        "path": "include/unitree/robot/g1/loco/g1_loco_api.hpp",
+        "local_sha256": "db7f771fad9ab8d40b3f3bf3651df28ee9cde1a937ae21dcdae2f4165f37e0ce",
+        "pinned_remote_url": "https://github.com/unitreerobotics/unitree_sdk2/blob/aaf69cb56c9d5ed63d8b284008ec3a8ab999bec1/include/unitree/robot/g1/loco/g1_loco_api.hpp",
+        "comparison": "Remote and local text identical after trimming trailing whitespace"
+      },
+      {
+        "path": "include/unitree/robot/h1/loco/h1_loco_client.hpp",
+        "local_sha256": "44e68ff8e9cab3e51a2230aa95df4c8f3fb99544d524bdb6967385fd8c702333",
+        "pinned_remote_url": "https://github.com/unitreerobotics/unitree_sdk2/blob/aaf69cb56c9d5ed63d8b284008ec3a8ab999bec1/include/unitree/robot/h1/loco/h1_loco_client.hpp",
+        "comparison": "Remote and local text identical after trimming trailing whitespace"
+      },
+      {
+        "path": "include/unitree/robot/h1/loco/h1_loco_api.hpp",
+        "local_sha256": "f9444b8c1c3d29d5320bce10f862d5b5b7a626d823c08729dfd60f40fa8d266f",
+        "pinned_remote_url": "https://github.com/unitreerobotics/unitree_sdk2/blob/aaf69cb56c9d5ed63d8b284008ec3a8ab999bec1/include/unitree/robot/h1/loco/h1_loco_api.hpp",
+        "comparison": "Remote and local text identical after trimming trailing whitespace"
+      },
+      {
+        "path": "include/unitree/robot/h2/loco/h2_loco_client.hpp",
+        "local_sha256": "1102d1744af1a5364726dbd6c4f5bbefa681401dcd63972ddb98fda9b9d5f367",
+        "pinned_remote_url": "https://github.com/unitreerobotics/unitree_sdk2/blob/aaf69cb56c9d5ed63d8b284008ec3a8ab999bec1/include/unitree/robot/h2/loco/h2_loco_client.hpp",
+        "comparison": "Remote and local text identical after trimming trailing whitespace"
+      },
+      {
+        "path": "include/unitree/robot/h2/loco/h2_loco_api.hpp",
+        "local_sha256": "f55560982edfe39652642910fedda8bca2777c3bbd3a068b375ca1cf8163980e",
+        "pinned_remote_url": "https://github.com/unitreerobotics/unitree_sdk2/blob/aaf69cb56c9d5ed63d8b284008ec3a8ab999bec1/include/unitree/robot/h2/loco/h2_loco_api.hpp",
+        "comparison": "Remote and local text identical after trimming trailing whitespace"
+      },
+      {
+        "path": "example/g1/high_level/g1_loco_client_example.cpp",
+        "local_sha256": "e119ea1f1664421fab36047310212198396a9cd5bcaafd944d10b20f7c6097cb",
+        "pinned_remote_url": "https://github.com/unitreerobotics/unitree_sdk2/blob/aaf69cb56c9d5ed63d8b284008ec3a8ab999bec1/example/g1/high_level/g1_loco_client_example.cpp",
+        "comparison": "Remote and local text identical after trimming trailing whitespace"
+      },
+      {
+        "path": "example/g1/high_level/g1_userctrl_dds_example.cpp",
+        "local_sha256": "a7d866a105339d16f7a41a1377620aae9be4ff527db82c46b44eb6911a6aca09",
+        "pinned_remote_url": "https://github.com/unitreerobotics/unitree_sdk2/blob/aaf69cb56c9d5ed63d8b284008ec3a8ab999bec1/example/g1/high_level/g1_userctrl_dds_example.cpp",
+        "comparison": "Remote and local text identical after trimming trailing whitespace"
+      },
+      {
+        "path": "example/h2/high_level/h2_arm_sdk_dds_example.cpp",
+        "local_sha256": "614c5a98bf04e1e8c6741e3eb5597780c1e8777d0d17f95f93bea4ac37adfdb1",
+        "pinned_remote_url": "https://github.com/unitreerobotics/unitree_sdk2/blob/aaf69cb56c9d5ed63d8b284008ec3a8ab999bec1/example/h2/high_level/h2_arm_sdk_dds_example.cpp",
+        "comparison": "Remote and local text identical after trimming trailing whitespace"
+      }
+    ]
+  },
+  "other_source_refs": [
+    {
+      "repository": "https://github.com/unitreerobotics/unitree_sdk2_python",
+      "commit": "814556d15970dd2ecf1c9984e845ca02ab07e206"
+    },
+    {
+      "repository": "https://github.com/sparkleholic/lgrobot_sdk",
+      "local_directory_name": "unitree_sdk2_reversed",
+      "commit": "392e753457adb24d08c2c1efd09cc2112d29a953",
+      "scope": "Reconstructed common SDK transport and dispatch, not robot motion firmware"
+    },
+    {
+      "repository": "unitree-app-templates",
+      "runtime_source_commit": "1a16513b8a57d76708ffd2854fe2a73c090cced1"
+    }
+  ],
+  "additional_sources": [
+    {
+      "url": "https://unistore.unitree.com/manuals?slug=switch-sdk2",
+      "role": "Official UserCtrl handoff contract, reviewed in the preceding detailed investigation"
+    },
+    {
+      "url": "https://github.com/unitreerobotics/unitree_sdk2_python/issues/181",
+      "role": "User report, not an official firmware contract; no comments when checked"
+    },
+    {
+      "url": "https://forum.mybotshop.de/t/unitree-g1-how-to-detect-motion-command-completion-with-g1-lococlient-apis/1702",
+      "role": "Distributor discussion of command completion; not Mimic internals"
+    },
+    {
+      "url": "https://arxiv.org/html/2611.11127v1#S7",
+      "role": "Field observations scoped to the authors robot and firmware"
+    },
+    {
+      "url": "https://github.com/wangxiangji666-gif/lyra-fleet/blob/d18f4b420cc9ea6b28a9dc8c91addcda5e5e6b2e/backend.py",
+      "role": "Public client explicitly queries/selects motions and sends a timed return request"
+    }
+  ]
+}

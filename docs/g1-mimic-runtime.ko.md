@@ -2,6 +2,9 @@
 
 [문서 색인](README.md) · [공식 제어 개념](g1-control-concepts.ko.md) · [빌드 및 배포](g1-build-and-deploy.ko.md)
 
+설치 시 등록되는 Action·로컬 상태와 공식 FsmId의 구분, 전체 전이 조건 표는
+[FsmId 통합 참조본](fsm-id-reference.ko.md)에 정리했다.
+
 이 문서는 현재 **소스와 설정을 함께** 기준으로 삼는다. 저장소에 포함된 실행 파일이
 이 소스를 그대로 빌드한 결과라는 가정은 하지 않는다. 포함된 파일과 소스의 차이는
 [빌드 문서](g1-build-and-deploy.ko.md)에 별도로 설명한다.

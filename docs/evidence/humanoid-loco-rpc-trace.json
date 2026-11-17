@@ -1,0 +1,188 @@
+{
+  "review_date": "2026-11-18",
+  "timezone": "Asia/Seoul",
+  "sdk_commit": "63096d0ac0c5d2dec9d6e0c22cd5233410ca2f36",
+  "sdk_archive": "lib/x86_64/libunitree_sdk2.a",
+  "sdk_archive_sha256": "08402aea74150dfbfc3fbfded4ca746916a8d892b54d2bade0cbf392a3be4029",
+  "actual_components": [
+    "G1/H1/H2 Loco inline methods",
+    "SDK JSON serialization"
+  ],
+  "substituted_component": "unitree::robot::Client transport",
+  "transport_return_code_is_test_double": true,
+  "synthetic_response": "{}",
+  "synthetic_response_is_robot_fsm_list": false,
+  "robot_state_simulated": false,
+  "robot_connected": false,
+  "requests": [
+    {
+      "model": "G1",
+      "call": "ZeroTorque",
+      "service": "sport",
+      "api_id": 7101,
+      "parameter": {
+        "data": 0
+      }
+    },
+    {
+      "model": "G1",
+      "call": "Damp",
+      "service": "sport",
+      "api_id": 7101,
+      "parameter": {
+        "data": 1
+      }
+    },
+    {
+      "model": "G1",
+      "call": "Squat",
+      "service": "sport",
+      "api_id": 7101,
+      "parameter": {
+        "data": 2
+      }
+    },
+    {
+      "model": "G1",
+      "call": "Sit",
+      "service": "sport",
+      "api_id": 7101,
+      "parameter": {
+        "data": 3
+      }
+    },
+    {
+      "model": "G1",
+      "call": "StandUp",
+      "service": "sport",
+      "api_id": 7101,
+      "parameter": {
+        "data": 4
+      }
+    },
+    {
+      "model": "G1",
+      "call": "Start",
+      "service": "sport",
+      "api_id": 7101,
+      "parameter": {
+        "data": 500
+      }
+    },
+    {
+      "model": "H1",
+      "call": "ZeroTorque",
+      "service": "loco",
+      "api_id": 8101,
+      "parameter": {
+        "data": 0
+      }
+    },
+    {
+      "model": "H1",
+      "call": "Damp",
+      "service": "loco",
+      "api_id": 8101,
+      "parameter": {
+        "data": 1
+      }
+    },
+    {
+      "model": "H1",
+      "call": "StandUp",
+      "service": "loco",
+      "api_id": 8101,
+      "parameter": {
+        "data": 2
+      }
+    },
+    {
+      "model": "H1",
+      "call": "Start",
+      "service": "loco",
+      "api_id": 8101,
+      "parameter": {
+        "data": 204
+      }
+    },
+    {
+      "model": "H2",
+      "call": "ZeroTorque",
+      "service": "sport",
+      "api_id": 7101,
+      "parameter": {
+        "data": 0
+      }
+    },
+    {
+      "model": "H2",
+      "call": "Damp",
+      "service": "sport",
+      "api_id": 7101,
+      "parameter": {
+        "data": 1
+      }
+    },
+    {
+      "model": "H2",
+      "call": "Squat",
+      "service": "sport",
+      "api_id": 7101,
+      "parameter": {
+        "data": 2
+      }
+    },
+    {
+      "model": "H2",
+      "call": "Sit",
+      "service": "sport",
+      "api_id": 7101,
+      "parameter": {
+        "data": 3
+      }
+    },
+    {
+      "model": "H2",
+      "call": "StandUp",
+      "service": "sport",
+      "api_id": 7101,
+      "parameter": {
+        "data": 4
+      }
+    },
+    {
+      "model": "H2",
+      "call": "Start",
+      "service": "sport",
+      "api_id": 7101,
+      "parameter": {
+        "data": 601
+      }
+    },
+    {
+      "model": "H2",
+      "call": "EnableArmSDK",
+      "service": "sport",
+      "api_id": 7109,
+      "parameter": {
+        "data": true
+      }
+    },
+    {
+      "model": "H2",
+      "call": "DisableArmSDK",
+      "service": "sport",
+      "api_id": 7109,
+      "parameter": {
+        "data": false
+      }
+    },
+    {
+      "model": "H2",
+      "call": "GetAvailableFsmIds",
+      "service": "sport",
+      "api_id": 7008,
+      "parameter": ""
+    }
+  ]
+}
