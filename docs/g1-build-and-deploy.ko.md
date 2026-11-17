@@ -216,6 +216,20 @@ Dockerfile은 `UNITREE_SDK2_REPO`, `UNITREE_SDK2_REF` build argument를 제공�
 Docker 캐시에 남아 있는 `main`과 실제 최신 `main`도 같다고 보장되지 않는다.
 앱 소스 버전, SDK 버전, 빌더 이미지 식별자와 실행 이미지 버전을 함께 기록해야 결과를 추적할 수 있다.
 
+### 4.4 SDK를 갱신해도 로컬 복사 헤더는 자동 갱신되지 않는다
+
+템플릿에는 SDK와 동일한 include 경로의 `g1_loco_client.hpp`, `g1_loco_api.hpp`가 있다.
+2026-11-18에 검토한 공식 SDK에는 `GetMimicMotion()`, `_fsm_api()`와 API 상수 `7100`이
+있지만 템플릿의 복사본에는 없다. CMake는 로컬 `include`를 우선 사용한다.
+
+따라서 빌더에 최신 SDK를 설치하는 것만으로 이 앱 소스에 `GetMimicMotion()` 메서드가
+자동으로 추가되지는 않는다. 이 API를 앱에 새로 도입하려면 어떤 버전의 헤더를 실제로
+컴파일하는지부터 확인해야 한다. 기존 `SetFsmId(int)`는 복사본에도 있으므로
+복합 정수를 전송하는 메서드 자체가 없다는 뜻은 아니다.
+
+이 문서 보강에서는 SDK나 앱 헤더를 교체하지 않았다.
+공식 모션 API와 현재 앱의 차이는 [별도 검증 문서](g1-mimic-motion-api.ko.md)에 설명한다.
+
 ## 5. 저장소에 포함된 app_out은 현재 소스와 다르다
 
 문서 작성 시 직접 검사한 결과는 다음과 같다.

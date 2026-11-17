@@ -10,16 +10,18 @@ Unitree의 특정 서비스만을 가리키는 고유 이름이 아니다.
 
 | 구분 | 관리 대상 | 확인·설정 위치 | 예 |
 |---|---|---|---|
-| 공식 `FsmId` | 선택된 운용·제어 모드 | `LocoClient::GetFsmId()`, `SetFsmId()` | Damping `1`, UserCtrl `1000` |
+| 공식 `FsmId` | 운용·제어 모드의 선택·조회 및 모션별 호출값 | `LocoClient::GetFsmId()`, `SetFsmId()` | Damping `1`, UserCtrl `1000`, Mimic 호출 `550507` |
 | 공식 `FsmMode` | 해당 모드의 정적·동적 상태 | `GetFsmMode()`, `SportModeState.fsm_mode` | 문서의 Static `0`, Dynamic `1` |
 | `InternalFsmMode` | UserCtrl에서 공식 제어기로 돌아갈 대상 | `SwitchToInternalCtrl()` 인자 | LAST `0`, PASSIVE `1`, WALKRUN `2` |
 | `mode_machine` | 기체의 하드웨어 구성 식별 | `LowState`와 `LowCmd` 필드 | 특정 G1 29자유도 구성 `5` |
 | 앱 내부 상태 ID | `g1_ctrl`의 실행 단계 | YAML의 `FSM._`, `CtrlFSM` | Passive `1`, Mimic `3`, Exit `4` |
 | Arm Action의 동작 ID | 팔 서비스가 실행할 동작 | `ExecuteAction()`, 팔 동작 상태 토픽 | 해제 동작 `99`, 악수 `27` |
+| Mimic 모션 API ID | 공식 Mimic 모션 목록의 개별 동작 | `GetMimicMotion()` 응답의 `motion` 키 | SDK 예시 `507` |
 
 숫자가 같아도 서로 다른 체계의 값은 연결되지 않는다.
 예를 들어 앱의 `Mimic=3`은 공식 `SitDown=3`과 관계가 없다.
 또한 복귀 선택값 `WALKRUN=2`는 공식 `FsmId=2`를 뜻하지 않는다.
+모션 ID에 `501`이 있더라도 공식 운용 모드 `FsmId=501`과는 별개의 값이다.
 
 ### 1.1 관련 RPC의 서비스와 API 번호
 
@@ -27,6 +29,7 @@ Unitree의 특정 서비스만을 가리키는 고유 이름이 아니다.
 |---|---|---:|---|
 | `sport` | `GetFsmId()` | `7001` | 공식 모드 번호 조회 |
 | `sport` | `GetFsmMode()` | `7002` | 공식 모드의 상태 조회 |
+| `sport` | `GetMimicMotion()` → `_fsm_api()` | `7100` | `fsm_id=550`, `api_id=1`로 모션 목록 조회 |
 | `sport` | `SetFsmId()` | `7101` | 공식 모드 번호를 지정한 전환 요청 |
 | `sport` | `SwitchToUserCtrl()` | `7110` | 사용자 제어 모드 진입 요청 |
 | `sport` | `SwitchToInternalCtrl()` | `7111` | 복귀 선택값을 지정한 공식 제어 복귀 요청 |
@@ -38,15 +41,20 @@ Unitree의 특정 서비스만을 가리키는 고유 이름이 아니다.
 현재 SDK의 공식 제어 복귀 메서드는 `SwitchToInternalCtrl()`이며 `ReleaseUserCtrl()`이 아니다.
 운용 모드 선택 메서드도 `SelectMode()`이다.
 
-근거: [템플릿 Loco API 상수](../g1_mimic_demo/deploy_template/include/unitree/robot/g1/loco/g1_loco_api.hpp),
+`GetMimicMotion()` 및 API `7100`은 분석한 공식 SDK에 존재하지만,
+템플릿이 복사해 둔 Loco 헤더에는 없다. 표의 모든 메서드가 템플릿 로컬 헤더에 있다는 뜻은 아니다.
+
+근거: [공식 G1 Loco 클라이언트][ref-loco-current], [공식 G1 Loco API 상수][ref-loco-api-current],
+[템플릿 Loco API 상수](../g1_mimic_demo/deploy_template/include/unitree/robot/g1/loco/g1_loco_api.hpp),
 [공식 Motion Switcher API 상수][ref-motion-api], [공식 Motion Switcher 클라이언트][ref-motion-client].
 
-## 2. 공식 FsmId: 선택된 운용·제어 모드
+## 2. 공식 FsmId: 운용 모드와 모션별 호출값
 
 ### 2.1 공식 문서에 명시된 항목
 
 다음은 [공식 운동 서비스 문서][ref-sport]의 Expert Interface에 있는 모드 표이다.
-상태 간에 임의로 전환할 수 있다는 의미의 표가 아니다.
+상태 간에 임의로 전환할 수 있다는 의미의 표가 아니며, `SetFsmId()`의 전체 호출값 목록도 아니다.
+같은 공식 문서의 Dance Mode 절은 아래 표와 별도로 Mimic 모션의 `550` 접두사 규칙을 설명한다.
 
 | FsmId | 공식 영문 명칭 | 문서에서 확인되는 구분 |
 |---:|---|---|
@@ -85,6 +93,30 @@ int32_t ret = client.GetFsmId(fsm_id);
 
 근거: [템플릿에 포함된 LocoClient](../g1_mimic_demo/deploy_template/include/unitree/robot/g1/loco/g1_loco_client.hpp),
 [공식 운동 서비스 문서][ref-sport].
+
+### 2.3 Mimic 모션의 550 접두사
+
+최신 공식 문서와 공식 SDK는 다음 경로를 제공한다.
+
+1. `GetMimicMotion(data)`로 현재 로봇이 제공하는 Mimic 모션 목록을 조회한다.
+2. 응답의 `motion` 키에 있는 모션 API ID를 선택한다.
+3. `550`과 그 ID를 이어 만든 정수를 `SetFsmId()`에 전달한다.
+
+공식 예시는 모션 API ID `507`에 대한 `SetFsmId(550507)`이다.
+`501`이 실제 목록에 있다면 같은 규칙의 호출값은 `550501`이다.
+이 접미사의 공식 SDK 용어는 **`motion_api_id`**이며, UniStore의 `app_id`라고 정의되어 있지 않다.
+
+여기서 복합 숫자는 **모션 실행을 요청할 때의 목표 ID**로 확인된다.
+실행 중 `GetFsmId()`가 그 숫자를 계속 반환하는지, 내부에서 반드시 `1000`으로 바뀌는지까지
+동일한 계약으로 확장하지 않는다. 공개 클라이언트의 `SetFsmId()`는 숫자를 API `7101`로 보낼 뿐,
+그 안에서 `SwitchToUserCtrl()`이나 `SwitchToInternalCtrl()`을 호출하지 않는다.
+
+현재 `g1_mimic_demo`도 이 모션 호출 경로를 사용하지 않는다.
+이 앱은 HTTP 입력 → 앱 Mimic 상태 → 명시적인 UserCtrl 진입 → 외부 정책 실행 경로를 사용한다.
+두 경로의 상태 전이도, 정확한 필드 구분과 미확정 항목은
+[Mimic 모션 API 검증 문서](g1-mimic-motion-api.ko.md)에 정리했다.
+
+근거: [공식 운동 서비스의 Dance Mode 절][ref-sport], [공식 G1 Loco 클라이언트][ref-loco-current].
 
 ## 3. 공식 FsmMode: 모드의 정적·동적 상태
 
@@ -148,6 +180,8 @@ stateDiagram-v2
 
 `LAST`는 앱의 이전 상태나 이전 관절 자세를 복원한다는 뜻이 아니다.
 이전 **공식 운용 모드**가 대상이다.
+이 설명만으로 종료한 `550xxx` 모션을 재실행하거나 중단 지점부터 재개한다고 해석하지 않는다.
+현재 템플릿의 정상 종료 경로는 `LAST`가 아니라 자세에 따른 `PASSIVE` 또는 `WALKRUN`이다.
 
 다음 두 호출은 서로 다른 요청이다.
 
@@ -412,6 +446,9 @@ SDK는 일부 사전 정의 동작이 마지막 자세를 유지할 수 있고, 
 - 공식 서버의 내부 상태 머신, 스레드, 프로세스 유지·종료 및 토픽 소비 구현.
 - UserCtrl에서 RPC 호출이 성공한 뒤 모든 서비스가 어떤 실행 상태를 유지하는지.
 - 모드 전환 성공만으로 모든 자세에서 사용자 정책이 안정적으로 동작하는지.
+- 공식 Mimic 모션 실행 중 `GetFsmId()`가 보고할 정확한 값과 내부 제어권 인계 순서.
+- `550xxx` 호출이 자동으로 UserCtrl `1000`에 진입·복귀하는지, 특정 모션을 재개하는지.
+- UniStore 설치 앱과 `motion_api_id` 사이에 모든 펌웨어에서 적용되는 등록·번호 할당 규칙.
 
 이 한계는 앱 소스 분석과 모순되지 않는다. 앱이 어떤 API를 호출하는지는 확인할 수 있지만,
 그 호출을 처리하는 로봇 펌웨어의 전체 구현까지 이 저장소에 포함되어 있지는 않다.
@@ -428,3 +465,5 @@ SDK는 일부 사전 정의 동작이 마지막 자세를 유지할 수 있고, 
 [ref-motion-client]: https://github.com/unitreerobotics/unitree_sdk2/blob/63096d0ac0c5d2dec9d6e0c22cd5233410ca2f36/include/unitree/robot/b2/motion_switcher/motion_switcher_client.hpp
 [ref-user-example]: https://github.com/unitreerobotics/unitree_sdk2/blob/63096d0ac0c5d2dec9d6e0c22cd5233410ca2f36/example/g1/high_level/g1_userctrl_dds_example.cpp
 [ref-arm-client]: https://github.com/unitreerobotics/unitree_sdk2/blob/63096d0ac0c5d2dec9d6e0c22cd5233410ca2f36/include/unitree/robot/g1/arm/g1_arm_action_client.hpp
+[ref-loco-current]: https://github.com/unitreerobotics/unitree_sdk2/blob/aaf69cb56c9d5ed63d8b284008ec3a8ab999bec1/include/unitree/robot/g1/loco/g1_loco_client.hpp
+[ref-loco-api-current]: https://github.com/unitreerobotics/unitree_sdk2/blob/aaf69cb56c9d5ed63d8b284008ec3a8ab999bec1/include/unitree/robot/g1/loco/g1_loco_api.hpp

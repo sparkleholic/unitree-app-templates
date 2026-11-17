@@ -20,20 +20,33 @@
    - ARM64 Docker 빌드와 수동 동기화
    - 포함된 바이너리와 현재 소스의 차이
    - 메타데이터, 패키징, 실행 환경 및 시뮬레이션의 전제
+4. [공식 Mimic 모션 API와 550 접두사 검증](g1-mimic-motion-api.ko.md)
+   - `GetMimicMotion()`, `motion_api_id`, `SetFsmId(550507)`의 공식 정의
+   - `550501`의 조건부 의미와 앱 ID·공식 모드 ID `501`의 구분
+   - 공식 모션 호출과 UserCtrl 기반 외부 정책 실행의 별도 상태 전이도
+   - 자동 `550xxx → 1000 → 550xxx` 전환 주장에 대한 확인 범위
 
 ## 분석 기준
 
 | 항목 | 기준 |
 |---|---|
-| 확인일 | 2026-11-17, Asia/Seoul |
+| 최초 확인일 | 2026-11-17, Asia/Seoul |
+| Mimic 모션 API 추가 검토일 | 2026-11-18, Asia/Seoul |
 | 앱 저장소 기준 커밋 | `1a16513b8a57d76708ffd2854fe2a73c090cced1` |
 | 로컬 공식 C++ SDK 기준 커밋 | `63096d0ac0c5d2dec9d6e0c22cd5233410ca2f36` |
+| 추가 검토 시 공식 C++ SDK 원격 main | `aaf69cb56c9d5ed63d8b284008ec3a8ab999bec1` |
 | 로컬 공식 Python SDK 기준 커밋 | `814556d15970dd2ecf1c9984e845ca02ab07e206` |
 | 앱 분석 대상 | `g1_mimic_demo/deploy_template/` 및 `g1_mimic_demo/app/g1/` |
 | 실행 확인 범위 | 소스·설정·ELF 검사와 격리된 Python 함수 확인. 로봇 제어 및 ARM64 전체 빌드는 수행하지 않음 |
 
 커밋은 이 문서 작성 전 소스의 기준이다. Dockerfile은 별도로 SDK의 `main`을 다운로드하므로,
 새로 생성한 빌더 이미지가 위의 로컬 SDK 커밋을 사용한다고 가정하면 안 된다.
+
+추가 검토에서는 원격 main의 G1 Loco 클라이언트·API 헤더와 Loco·UserCtrl 예제를
+가져와 로컬 SDK와 대조했다. 해당 네 파일의 내용은 로컬 SDK와 동일했다.
+`GetMimicMotion()`은 로컬 SDK에도 이미 있었으며, 최초 문서의 모드 표는 전체 인터페이스를
+포괄하지 못했다. 이번 보강에서는 공식 모션 호출 경로를 추가하되, 비공개 서버의 내부 구현까지
+UserCtrl과 동일하다고 해석하지 않는다. SDK 체크아웃과 실행 코드는 변경하지 않았다.
 
 ## 근거를 읽는 방법
 
@@ -50,12 +63,14 @@ API 호출이 성공했다고 최종 상태 전환까지 성공했다고 간주�
 
 | 이 문서의 표현 | 대상 |
 |---|---|
-| 공식 FSM / 공식 `FsmId` | 로봇의 내장 운동 제어기에서 보고하는 상태 |
+| 공식 FSM / 공식 `FsmId` | 공식 운용 모드의 선택·조회. `SetFsmId()`는 모션별 복합 호출값도 수용 |
 | 공식 `FsmMode` | 공식 운동 제어기가 보고하는 모드의 정적·동적 상태 |
 | 앱 FSM / 앱 상태 ID | `CtrlFSM`, `FSMStringMap`, YAML이 관리하는 프로그램 내부 상태 |
 | 복귀 선택값 | `SwitchToInternalCtrl()`의 `InternalFsmMode` 인자 |
 | 기체 구성 ID | `LowCmd` / `LowState`의 `mode_machine` |
 | 팔 동작 ID | Arm Action 서비스의 동작 번호. 공식 `FsmId`와 별개 |
+| Mimic `motion_api_id` | `GetMimicMotion()`의 `motion` 목록에서 모션을 식별하는 키 |
+| Mimic 복합 호출 ID | `550` 접두사와 모션 API ID를 이어 만든 `SetFsmId()` 인자. 예: `550507` |
 
 공유 AI 대화와 이전 설명은 조사 항목을 정리하는 참고로만 사용했다.
 인터페이스 이름, 지원 조건 및 코드 동작의 근거는 공식 문서와 실제 소스이다.
